@@ -61,5 +61,5 @@ This should fix it.
 
 == Screenshots ==
 
-1. http://raynfall.com/wp-content/uploads/2012/10/perrybtb.jpg
-2. http://raynfall.com/wp-content/uploads/2012/10/perrybtb2.jpg
+1. Screenshot Buy This Book - Widget
+2. Screenshot Buy This Book - Front end
