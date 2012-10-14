@@ -1,14 +1,14 @@
 <?php
 /**
  * @package Buy_This_Book
- * @version 1.0
+ * @version 1.1
  */
 /*
 Plugin Name: Buy This Book
 Plugin URI: http://raynfall.com/buy-this-book
 Description: For published authors who want to easily show off their books on different services through a slideout menu. Widget version only. Currently supports linking to Amazon, Kobo, Smashwords, Barnes & Noble, Lulu, and iBooks. Please see the <a href="http://raynfall.com/buy-this-book">plugin page</a> for step-by-step installation instructions.
 Author: Claire Ryan
-Version: 1.0
+Version: 1.1
 Author URI: http://raynfall.com/
 */
 /*  Copyright 2012 CLAIRE RYAN  (email : info@raynfall.com)
@@ -30,11 +30,15 @@ Author URI: http://raynfall.com/
 /**
  * Adds the Buy This Book Widget.
  */
+ 
+$btb_service_array = array( 'Amazon', 'Kobo', 'Smashwords', 'Lulu', 'Barnes and Noble', 'iBooks' );
+ 
 class Buy_Book extends WP_Widget {
 
 	/**
 	 * Register widget with WordPress.
 	 */
+	 
 	public function __construct() {
 		$widget_ops = array('classname' => 'widget_text', 'description' => __('Add your books here'));
 		$control_ops = array('width' => 600);
@@ -42,7 +46,7 @@ class Buy_Book extends WP_Widget {
 	}
 
 	/**
-	 * Front-end display of widget.
+	 * Front-end display of the BTB Widget.
 	 *
 	 * @see WP_Widget::widget()
 	 *
@@ -50,93 +54,35 @@ class Buy_Book extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
+		global $btb_service_array;
 		extract( $args );
 		$header = apply_filters( 'widget_header', $instance['header'] );
-		
-		$image1 = apply_filters( 'widget_image1', $instance['image1'] );
-		$amazon1 = apply_filters( 'widget_amazon1', $instance['amazon1'] );
-		$kobo1 = apply_filters( 'widget_kobo1', $instance['kobo1'] );
-		$bn1 = apply_filters( 'widget_bn1', $instance['bn1'] );
-		$smashwords1 = apply_filters( 'widget_smashwords1', $instance['smashwords1'] );
-		$lulu1 = apply_filters( 'widget_lulu1', $instance['lulu1'] );
-		$ibooks1 = apply_filters( 'widget_ibooks1', $instance['ibooks1'] );
-		
-		$image2 = apply_filters( 'widget_image2', $instance['image2'] );
-		$amazon2 = apply_filters( 'widget_amazon2', $instance['amazon2'] );
-		$kobo2 = apply_filters( 'widget_kobo2', $instance['kobo2'] );
-		$bn2 = apply_filters( 'widget_bn2', $instance['bn2'] );
-		$smashwords2 = apply_filters( 'widget_smashwords2', $instance['smashwords2'] );
-		$lulu2 = apply_filters( 'widget_lulu2', $instance['lulu2'] );
-		$ibooks2 = apply_filters( 'widget_ibooks2', $instance['ibooks2'] );
-		
-		$image3 = apply_filters( 'widget_image3', $instance['image3'] );
-		$amazon3 = apply_filters( 'widget_amazon3', $instance['amazon3'] );
-		$kobo3 = apply_filters( 'widget_kobo3', $instance['kobo3'] );
-		$bn3 = apply_filters( 'widget_bn3', $instance['bn3'] );
-		$smashwords3 = apply_filters( 'widget_smashwords3', $instance['smashwords3'] );
-		$lulu3 = apply_filters( 'widget_lulu3', $instance['lulu3'] );
-		$ibooks3 = apply_filters( 'widget_ibooks3', $instance['ibooks3'] );
-				
+		for($i=1; $i <= 3; $i++) {
+			${'image'.$i} = apply_filters( 'widget_image'.$i, $instance['image'.$i] );
+			foreach ($btb_service_array as &$btb_name)
+			{
+				${$btb_name.$i} = apply_filters( ('widget_'. $btb_name  . $i), $instance[($btb_name.$i)] );
+			}
+		}				
 		$before_widget = '<div class="buybook widget">';
 		$after_widget = '</div><div style="clear:both;"></div>';
 		$before_header='<h3 class="widget-title">';
 		$after_header='</h3>';
-		$before_image='<div class="toggle"><a class="trigger" href="#"><img class="btbalign"src="';
+		$before_image='<div class="toggle"><a class="trigger" href="#"><img class="btbalign" src="';
 		$after_image='"/ ></a><div class="box">';
 		$closer = '</div></div>';
 		echo $before_widget;
 		if ( ! empty( $header ) )
-			echo $before_header . $header . $after_header;
-		if ( ! empty( $image1 ) )
-		{
-			echo $before_image . $image1 . $after_image;
-			if ( ! empty( $amazon1 ) )
-				echo '<a href="' . $amazon1 . '" title="Amazon" target="_blank"><img src="' . plugins_url('icons/amazon.png', __FILE__) . '" alt="Amazon" /></a>';
-			if ( ! empty( $kobo1 ) )
-				echo '<a href="' . $kobo1 . '" title="Kobo" target="_blank"><img src="' . plugins_url('icons/kobo.png', __FILE__) . '" alt="Kobo" /></a>';
-			if ( ! empty( $bn1 ) )
-				echo '<a href="' . $bn1 . '" title="Barnes & Noble" target="_blank"><img src="' . plugins_url('icons/bn.png', __FILE__) . '" alt="Barnes & Noble" /></a>';
-			if ( ! empty( $smashwords1 ) )
-				echo '<a href="' . $smashwords1 . '" title="Smashwords" target="_blank"><img src="' . plugins_url('icons/smashwords.png', __FILE__) . '" alt="Smashwords" /></a>';
-			if ( ! empty( $lulu1 ) )
-				echo '<a href="' . $lulu1 . '" title="Lulu" target="_blank"><img src="' . plugins_url('icons/lulu.png', __FILE__) . '" alt="Lulu" /></a>';
-			if ( ! empty( $ibooks1 ) )
-				echo '<a href="' . $ibooks1 . '" title="iBooks" target="_blank"><img src="' . plugins_url('icons/ibooks.png', __FILE__) . '" alt="iBooks" /></a>';
-			echo $closer;
-		}
-		if ( ! empty( $image2 ) )
-		{
-			echo $before_image . $image2 . $after_image;
-			if ( ! empty( $amazon2 ) )
-				echo '<a href="' . $amazon2 . '" title="Amazon" target="_blank"><img src="' . plugins_url('icons/amazon.png', __FILE__) . '" alt="Amazon" /></a>';
-			if ( ! empty( $kobo2 ) )
-				echo '<a href="' . $kobo2 . '" title="Kobo" target="_blank"><img src="' . plugins_url('icons/kobo.png', __FILE__) . '" alt="Kobo" /></a>';
-			if ( ! empty( $bn2 ) )
-				echo '<a href="' . $bn2 . '" title="Barnes & Noble" target="_blank"><img src="' . plugins_url('icons/bn.png', __FILE__) . '" alt="Barnes & Noble" /></a>';
-			if ( ! empty( $smashwords2 ) )
-				echo '<a href="' . $smashwords2 . '" title="Smashwords" target="_blank"><img src="' . plugins_url('icons/smashwords.png', __FILE__) . '" alt="Smashwords" /></a>';
-			if ( ! empty( $lulu2 ) )
-				echo '<a href="' . $lulu2 . '" title="Lulu" target="_blank"><img src="' . plugins_url('icons/lulu.png', __FILE__) . '" alt="Lulu" /></a>';
-			if ( ! empty( $ibooks2 ) )
-				echo '<a href="' . $ibooks2 . '" title="iBooks" target="_blank"><img src="' . plugins_url('icons/ibooks.png', __FILE__) . '" alt="iBooks" /></a>';
-			echo $closer;
-		}
-		if ( ! empty( $image3 ) )
-		{
-			echo $before_image . $image3 . $after_image;
-			if ( ! empty( $amazon3 ) )
-				echo '<a href="' . $amazon3 . '" title="Amazon" target="_blank"><img src="' . plugins_url('icons/amazon.png', __FILE__) . '" alt="Amazon" /></a>';
-			if ( ! empty( $kobo3 ) )
-				echo '<a href="' . $kobo3 . '" title="Kobo" target="_blank"><img src="' . plugins_url('icons/kobo.png', __FILE__) . '" alt="Kobo" /></a>';
-			if ( ! empty( $bn3 ) )
-				echo '<a href="' . $bn3 . '" title="Barnes & Noble" target="_blank"><img src="' . plugins_url('icons/bn.png', __FILE__) . '" alt="Barnes & Noble" /></a>';
-			if ( ! empty( $smashwords3 ) )
-				echo '<a href="' . $smashwords3 . '" title="Smashwords" target="_blank"><img src="' . plugins_url('icons/smashwords.png', __FILE__) . '" alt="Smashwords" /></a>';
-			if ( ! empty( $lulu3 ) )
-				echo '<a href="' . $lulu3 . '" title="Lulu" target="_blank"><img src="' . plugins_url('icons/lulu.png', __FILE__) . '" alt="Lulu" /></a>';
-			if ( ! empty( $ibooks3 ) )
-				echo '<a href="' . $ibooks3 . '" title="iBooks" target="_blank"><img src="' . plugins_url('icons/ibooks.png', __FILE__) . '" alt="iBooks" /></a>';
-			echo $closer;
+			echo $before_header . esc_attr($header) . $after_header;
+		for($k=1; $k <= 3; $k++) {
+			if ( ! empty( ${'image'.$k} ) ) {
+				echo $before_image . esc_url(${'image'.$k}) . $after_image;
+				foreach ($btb_service_array as &$btb_name) {	
+					if ( ! empty( ${$btb_name.$k} ) )
+						echo '<a href="' . esc_url((${$btb_name.$k})) . '" title="' . esc_attr($btb_name) . '" target="_blank"><img src="' . esc_url(plugins_url('icons/' . esc_attr($btb_name) . '.png', __FILE__)) . '" alt="' . esc_attr($btb_name) . '" /></a>';
+				}
+				echo $closer;
+			}
 		}
 		echo $after_widget;
 	}
@@ -152,31 +98,16 @@ class Buy_Book extends WP_Widget {
 	 * @return array Updated safe values to be saved.
 	 */
 	public function update( $new_instance, $old_instance ) {
+		global $btb_service_array;
 		$instance = array();
-		$instance['header'] = strip_tags( $new_instance['header'] );
-		$instance['image1'] = strip_tags( $new_instance['image1'] );
-		$instance['amazon1'] = strip_tags( $new_instance['amazon1'] );
-		$instance['kobo1'] = strip_tags( $new_instance['kobo1'] );
-		$instance['bn1'] = strip_tags( $new_instance['bn1'] );
-		$instance['smashwords1'] = strip_tags( $new_instance['smashwords1'] );
-		$instance['lulu1'] = strip_tags( $new_instance['lulu1'] );
-		$instance['ibooks1'] = strip_tags( $new_instance['ibooks1'] );
-		
-		$instance['image2'] = strip_tags( $new_instance['image2'] );
-		$instance['amazon2'] = strip_tags( $new_instance['amazon2'] );
-		$instance['kobo2'] = strip_tags( $new_instance['kobo2'] );
-		$instance['bn2'] = strip_tags( $new_instance['bn2'] );
-		$instance['smashwords2'] = strip_tags( $new_instance['smashwords2'] );
-		$instance['lulu2'] = strip_tags( $new_instance['lulu2'] );
-		$instance['ibooks2'] = strip_tags( $new_instance['ibooks2'] );
-		
-		$instance['image3'] = strip_tags( $new_instance['image3'] );
-		$instance['amazon3'] = strip_tags( $new_instance['amazon3'] );
-		$instance['kobo3'] = strip_tags( $new_instance['kobo3'] );
-		$instance['bn3'] = strip_tags( $new_instance['bn3'] );
-		$instance['smashwords3'] = strip_tags( $new_instance['smashwords3'] );
-		$instance['lulu3'] = strip_tags( $new_instance['lulu3'] );
-		$instance['ibooks3'] = strip_tags( $new_instance['ibooks3'] );
+		$instance['header'] = esc_html(strip_tags( $new_instance['header'] ));
+		for($x=1; $x <= 3; $x++) {
+			$instance[('image'.$x)] = esc_url(strip_tags( $new_instance[('image'.$x)] ));
+			foreach ($btb_service_array as &$btb_name) {
+				echo $btb_name.$x;
+				$instance[($btb_name.$x)] = esc_url(strip_tags( $new_instance[($btb_name.$x)] ));
+			}
+		}
 		return $instance;
 	}
 
@@ -188,202 +119,43 @@ class Buy_Book extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
+		global $btb_service_array;
 		if ( isset( $instance[ 'header' ] ) ) {
 			$header = $instance[ 'header' ];
 		}
 		else {
 			$header = __( 'Widget Header', 'text_domain' );
 		}
-		if ( isset( $instance[ 'image1' ] ) ) {
-			$image1 = $instance[ 'image1' ];
-		}
-		else {
-			$image1 = __( '', 'text_domain' );
-		}
 		
-		if ( isset( $instance[ 'amazon1' ] ) ) {
-			$amazon1 = $instance[ 'amazon1' ];
-		}
-		else {
-			$amazon1 = __( '', 'text_domain' );
-		}
-		
-		if ( isset( $instance[ 'kobo1' ] ) ) {
-			$kobo1 = $instance[ 'kobo1' ];
-		}
-		else {
-			$kobo1 = __( '', 'text_domain' );
-		}
-		
-		if ( isset( $instance[ 'bn1' ] ) ) {
-			$bn1 = $instance[ 'bn1' ];
-		}
-		else {
-			$bn1 = __( '', 'text_domain' );
-		}
-		
-		if ( isset( $instance[ 'smashwords1' ] ) ) {
-			$smashwords1 = $instance[ 'smashwords1' ];
-		}
-		else {
-			$smashwords1 = __( '', 'text_domain' );
-		}
-		if ( isset( $instance[ 'lulu1' ] ) ) {
-			$lulu1 = $instance[ 'lulu1' ];
-		}
-		else {
-			$lulu1 = __( '', 'text_domain' );
-		}
-		if ( isset( $instance[ 'ibooks1' ] ) ) {
-			$ibooks1 = $instance[ 'ibooks1' ];
-		}
-		else {
-			$ibooks1 = __( '', 'text_domain' );
-		}
-				if ( isset( $instance[ 'image2' ] ) ) {
-			$image2 = $instance[ 'image2' ];
-		}
-		else {
-			$image2 = __( '', 'text_domain' );
-		}
-		
-		if ( isset( $instance[ 'amazon2' ] ) ) {
-			$amazon2 = $instance[ 'amazon2' ];
-		}
-		else {
-			$amazon2 = __( '', 'text_domain' );
-		}
-		
-		if ( isset( $instance[ 'kobo2' ] ) ) {
-			$kobo2 = $instance[ 'kobo2' ];
-		}
-		else {
-			$kobo2 = __( '', 'text_domain' );
-		}
-		
-		if ( isset( $instance[ 'bn2' ] ) ) {
-			$bn2 = $instance[ 'bn2' ];
-		}
-		else {
-			$bn2 = __( '', 'text_domain' );
-		}
-		
-		if ( isset( $instance[ 'smashwords2' ] ) ) {
-			$smashwords2 = $instance[ 'smashwords2' ];
-		}
-		else {
-			$smashwords2 = __( '', 'text_domain' );
-		}
-		if ( isset( $instance[ 'lulu2' ] ) ) {
-			$lulu2 = $instance[ 'lulu2' ];
-		}
-		else {
-			$lulu2 = __( '', 'text_domain' );
-		}
-		if ( isset( $instance[ 'ibooks2' ] ) ) {
-			$ibooks2 = $instance[ 'ibooks2' ];
-		}
-		else {
-			$ibooks2 = __( '', 'text_domain' );
-		}
-		if ( isset( $instance[ 'image3' ] ) ) {
-			$image3 = $instance[ 'image3' ];
-		}
-		else {
-			$image3 = __( '', 'text_domain' );
-		}
-		
-		if ( isset( $instance[ 'amazon3' ] ) ) {
-			$amazon3 = $instance[ 'amazon3' ];
-		}
-		else {
-			$amazon3 = __( '', 'text_domain' );
-		}
-		
-		if ( isset( $instance[ 'kobo3' ] ) ) {
-			$kobo3 = $instance[ 'kobo3' ];
-		}
-		else {
-			$kobo3 = __( '', 'text_domain' );
-		}
-		
-		if ( isset( $instance[ 'bn3' ] ) ) {
-			$bn3 = $instance[ 'bn3' ];
-		}
-		else {
-			$bn3 = __( '', 'text_domain' );
-		}
-		
-		if ( isset( $instance[ 'smashwords3' ] ) ) {
-			$smashwords3 = $instance[ 'smashwords3' ];
-		}
-		else {
-			$smashwords3 = __( '', 'text_domain' );
-		}
-		if ( isset( $instance[ 'lulu3' ] ) ) {
-			$lulu3 = $instance[ 'lulu3' ];
-		}
-		else {
-			$lulu3 = __( '', 'text_domain' );
-		}
-		if ( isset( $instance[ 'ibooks3' ] ) ) {
-			$ibooks3 = $instance[ 'ibooks3' ];
-		}
-		else {
-			$ibooks3 = __( '', 'text_domain' );
+		for($y=1; $y <= 3; $y++) {
+			if ( isset( $instance[ ('image'.$y) ] ) ) {
+				${'image' .$y} = $instance[ ('image'.$y) ];
+			}
+			else {
+				${'image' .$y} = __( '', 'text_domain' );
+			}
+			foreach ($btb_service_array as &$btb_name) {
+				if ( isset( $instance[ ($btb_name.$y) ] ) ) {
+					${$btb_name.$y} = $instance[ ($btb_name.$y) ];
+				}
+				else {
+					${$btb_name.$y} = __( '', 'text_domain' );
+				}
+			}
 		}
 		?>
 		<p>
-		<label for="<?php echo $this->get_field_id( 'header' ); ?>"><?php _e( ' Header' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'header' ); ?>" name="<?php echo $this->get_field_name( 'header' ); ?>" type="text" value="<?php echo esc_attr( $header ); ?>" />
+		<label for="<?php echo esc_attr($this->get_field_id( 'header' )); ?>"><?php _e( ' Header' ); ?></label> 
+		<input class="widefat" id="<?php echo esc_attr($this->get_field_id( 'header' )); ?>" name="<?php echo esc_attr($this->get_field_name( 'header' )); ?>" type="text" value="<?php echo esc_attr( $header ); ?>" />
+		<?php for($y=1; $y <= 3; $y++) { ?>
 		<div class="btbbookcolumn">
-		<label for="<?php echo $this->get_field_id( 'image1' ); ?>"><?php _e( 'First book image:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'image1' ); ?>" name="<?php echo $this->get_field_name( 'image1' ); ?>" type="text" value="<?php echo esc_attr( $image1 ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'amazon1' ); ?>"><?php _e( 'Amazon:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'amazon1' ); ?>" name="<?php echo $this->get_field_name( 'amazon1' ); ?>" type="text" value="<?php echo esc_attr( $amazon1 ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'kobo1' ); ?>"><?php _e( 'Kobo:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'kobo1' ); ?>" name="<?php echo $this->get_field_name( 'kobo1' ); ?>" type="text" value="<?php echo esc_attr( $kobo1 ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'bn1' ); ?>"><?php _e( 'Barnes & Noble:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'bn1' ); ?>" name="<?php echo $this->get_field_name( 'bn1' ); ?>" type="text" value="<?php echo esc_attr( $bn1 ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'smashwords1' ); ?>"><?php _e( 'Smashwords:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'smashwords1' ); ?>" name="<?php echo $this->get_field_name( 'smashwords1' ); ?>" type="text" value="<?php echo esc_attr( $smashwords1 ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'ibooks1' ); ?>"><?php _e( 'iBooks:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'ibooks1' ); ?>" name="<?php echo $this->get_field_name( 'ibooks1' ); ?>" type="text" value="<?php echo esc_attr( $ibooks1 ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'lulu1' ); ?>"><?php _e( 'Lulu:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'lulu1' ); ?>" name="<?php echo $this->get_field_name( 'lulu1' ); ?>" type="text" value="<?php echo esc_attr( $lulu1 ); ?>" />
-		</div>
-		<div class="btbbookcolumn">
-		<label for="<?php echo $this->get_field_id( 'image2' ); ?>"><?php _e( 'Second book image:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'image2' ); ?>" name="<?php echo $this->get_field_name( 'image2' ); ?>" type="text" value="<?php echo esc_attr( $image2 ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'amazon2' ); ?>"><?php _e( 'Amazon:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'amazon2' ); ?>" name="<?php echo $this->get_field_name( 'amazon2' ); ?>" type="text" value="<?php echo esc_attr( $amazon2 ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'kobo2' ); ?>"><?php _e( 'Kobo:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'kobo2' ); ?>" name="<?php echo $this->get_field_name( 'kobo2' ); ?>" type="text" value="<?php echo esc_attr( $kobo2 ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'bn2' ); ?>"><?php _e( 'Barnes & Noble:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'bn2' ); ?>" name="<?php echo $this->get_field_name( 'bn2' ); ?>" type="text" value="<?php echo esc_attr( $bn2 ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'smashwords2' ); ?>"><?php _e( 'Smashwords:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'smashwords2' ); ?>" name="<?php echo $this->get_field_name( 'smashwords2' ); ?>" type="text" value="<?php echo esc_attr( $smashwords2 ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'ibooks2' ); ?>"><?php _e( 'iBooks:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'ibooks2' ); ?>" name="<?php echo $this->get_field_name( 'ibooks2' ); ?>" type="text" value="<?php echo esc_attr( $ibooks2 ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'lulu2' ); ?>"><?php _e( 'Lulu:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'lulu2' ); ?>" name="<?php echo $this->get_field_name( 'lulu2' ); ?>" type="text" value="<?php echo esc_attr( $lulu2 ); ?>" />
-		</div>
-		<div class="btbbookcolumn">
-		<label for="<?php echo $this->get_field_id( 'image3' ); ?>"><?php _e( 'Third book image:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'image3' ); ?>" name="<?php echo $this->get_field_name( 'image3' ); ?>" type="text" value="<?php echo esc_attr( $image3 ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'amazon3' ); ?>"><?php _e( 'Amazon:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'amazon3' ); ?>" name="<?php echo $this->get_field_name( 'amazon3' ); ?>" type="text" value="<?php echo esc_attr( $amazon3 ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'kobo3' ); ?>"><?php _e( 'Kobo:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'kobo3' ); ?>" name="<?php echo $this->get_field_name( 'kobo3' ); ?>" type="text" value="<?php echo esc_attr( $kobo3 ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'bn3' ); ?>"><?php _e( 'Barnes & Noble:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'bn3' ); ?>" name="<?php echo $this->get_field_name( 'bn3' ); ?>" type="text" value="<?php echo esc_attr( $bn3 ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'smashwords3' ); ?>"><?php _e( 'Smashwords:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'smashwords3' ); ?>" name="<?php echo $this->get_field_name( 'smashwords3' ); ?>" type="text" value="<?php echo esc_attr( $smashwords3 ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'ibooks3' ); ?>"><?php _e( 'iBooks:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'ibooks3' ); ?>" name="<?php echo $this->get_field_name( 'ibooks3' ); ?>" type="text" value="<?php echo esc_attr( $ibooks3 ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'lulu3' ); ?>"><?php _e( 'Lulu:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'lulu3' ); ?>" name="<?php echo $this->get_field_name( 'lulu3' ); ?>" type="text" value="<?php echo esc_attr( $lulu3 ); ?>" />
-		</div>
+		<label for="<?php echo $this->get_field_id( 'image'.$y ); ?>"><?php _e( 'Book Image '.$y ); ?></label> 
+		<input class="widefat" id="<?php echo esc_attr($this->get_field_id( 'image'.$y )); ?>" name="<?php echo esc_attr($this->get_field_name( 'image'.$y )); ?>" type="text" value="<?php echo esc_attr( ${'image'.$y} ); ?>" />
+		<?php foreach ($btb_service_array as &$btb_name) { ?>
+		<label for="<?php echo $this->get_field_id( $btb_name.$y ); ?>"><?php _e( $btb_name ); ?></label> 
+		<input class="widefat" id="<?php echo esc_attr($this->get_field_id( $btb_name.$y )); ?>" name="<?php echo esc_attr($this->get_field_name( $btb_name.$y )); ?>" type="text" value="<?php echo esc_attr( ${$btb_name.$y} ); ?>" />
+		<?php } ?>
+		</div><?php } ?>
 		</p>
 		<?php 
 	}
@@ -393,18 +165,17 @@ add_action('widgets_init', 'register_buy_book');
 function register_buy_book() {
     register_widget('Buy_Book');
 }
-add_action('wp_enqueue_scripts', 'enqueuestylesandjs');
-add_filter('admin_enqueue_scripts', 'enqueuewidgetcss' );
-function enqueuestylesandjs(){
+add_action('wp_enqueue_scripts', 'btb_enqueuestylesandjs');
+add_filter('admin_enqueue_scripts', 'btb_enqueuewidgetcss' );
+function btb_enqueuestylesandjs(){
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_style('bookstyle', plugins_url('style.css', __FILE__));
 	wp_enqueue_script('bookscript', plugins_url('buybook.js', __FILE__));
 }
-function enqueuewidgetcss($page) {
+function btb_enqueuewidgetcss($page) {
 		if( 'widgets.php' != $page )
         {
              return;
         }
 		wp_enqueue_style('admincss', plugins_url('adminstyle.css', __FILE__));
 }
-?>
