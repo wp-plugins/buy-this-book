@@ -2,9 +2,9 @@
 Contributors: raynfall
 Donate link: http://www.raynfall.com
 Tags: book, author, display, covers, amazon, kobo, ibooks, smashwords, lulu, barnes, noble
-Requires at least: 3.3
+Requires at least: 3.0
 Tested up to: 3.4
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,11 +29,13 @@ Buy This Book allows authors to display their books on their website with links 
 <li>iBooks</li>
 </ul>
 
-Suggestions for new functionality welcome! Please contact me here:
+<p>This version of the plugin can also be modified to use other services.</p>
 
-<a href="https://www.facebook.com/RaynfallAgency">Facebook</a>
-<a href="http://www.twitter.com/@rayntweets">Twitter</a>
-<a href="http://www.raynfall.com">Website</a>
+<p>Suggestions for new functionality welcome! Please contact me here:</p>
+
+<p><a href="https://www.facebook.com/RaynfallAgency">Facebook</a><br />
+<a href="http://www.twitter.com/@rayntweets">Twitter</a><br />
+<a href="http://www.raynfall.com">Website</a></p>
 
 == Installation ==
 
@@ -44,6 +46,17 @@ Suggestions for new functionality welcome! Please contact me here:
 5. Paste the cover image link into the appropriate box. Here’s where the size of the image becomes important – if you want to add just one book to your sidebar, make the image as wide as the sidebar and only use the first column. If you’re only adding two and you want them to sit side by side, you have to make sure the images are narrow enough to fit comfortably. If you find that your images are below each other instead of being side by side, and you don’t want this to happen, then reduce their size.
 5. Paste a link to your book’s page for each website into the appropriate boxes. Any you don’t use won’t show up.
 6. Save the widget. You’re done! Check your site and click on the cover images to see the menu slide out from the bottom.
+
+== Changelog ==
+
+= 1.1 =
+* Code improvements to allow easy customization of the plugin
+* Security fix
+
+== Upgrade Notice ==
+
+= 1.1 =
+This version provides some security fixes to the code; please be aware that it may reset the widget so you will have to add the links again.
 
 == Frequently asked questions ==
 
