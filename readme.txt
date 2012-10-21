@@ -4,7 +4,7 @@ Donate link: http://www.raynfall.com
 Tags: book, author, display, covers, amazon, kobo, ibooks, smashwords, lulu, barnes, noble
 Requires at least: 3.0
 Tested up to: 3.4
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,14 +49,17 @@ Buy This Book allows authors to display their books on their website with links 
 
 == Changelog ==
 
+= 1.2 =
+* Bugfix - Barnes & Noble icon should now appear correctly.
+
 = 1.1 =
 * Code improvements to allow easy customization of the plugin
 * Security fix
 
 == Upgrade Notice ==
 
-= 1.1 =
-This version provides some security fixes to the code; please be aware that it may reset the widget so you will have to add the links again.
+= 1.2 =
+The Barnes & Noble link may be reset, please be aware that you will have to add the link again.
 
 == Frequently asked questions ==
 

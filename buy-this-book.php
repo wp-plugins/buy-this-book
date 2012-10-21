@@ -31,7 +31,7 @@ Author URI: http://raynfall.com/
  * Adds the Buy This Book Widget.
  */
  
-$btb_service_array = array( 'Amazon', 'Kobo', 'Smashwords', 'Lulu', 'Barnes and Noble', 'iBooks' );
+$btb_service_array = array( 'Amazon', 'Kobo', 'Smashwords', 'Lulu', 'Barnes%20and%20Noble', 'iBooks' ); //adds the service array. To include more services, append the service name to this array and place a 32x32 png image icon in the /icons folder.
  
 class Buy_Book extends WP_Widget {
 
@@ -112,7 +112,7 @@ class Buy_Book extends WP_Widget {
 	}
 
 	/**
-	 * Back-end widget form.
+	 * Back-end widget form
 	 *
 	 * @see WP_Widget::form()
 	 *
@@ -152,7 +152,7 @@ class Buy_Book extends WP_Widget {
 		<label for="<?php echo $this->get_field_id( 'image'.$y ); ?>"><?php _e( 'Book Image '.$y ); ?></label> 
 		<input class="widefat" id="<?php echo esc_attr($this->get_field_id( 'image'.$y )); ?>" name="<?php echo esc_attr($this->get_field_name( 'image'.$y )); ?>" type="text" value="<?php echo esc_attr( ${'image'.$y} ); ?>" />
 		<?php foreach ($btb_service_array as &$btb_name) { ?>
-		<label for="<?php echo $this->get_field_id( $btb_name.$y ); ?>"><?php _e( $btb_name ); ?></label> 
+		<label for="<?php echo $this->get_field_id( $btb_name.$y ); ?>"><?php _e( str_replace("%20"," ",$btb_name) ); ?></label> 
 		<input class="widefat" id="<?php echo esc_attr($this->get_field_id( $btb_name.$y )); ?>" name="<?php echo esc_attr($this->get_field_name( $btb_name.$y )); ?>" type="text" value="<?php echo esc_attr( ${$btb_name.$y} ); ?>" />
 		<?php } ?>
 		</div><?php } ?>
