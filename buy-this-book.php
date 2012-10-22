@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Buy_This_Book
- * @version 1.1
+ * @version 1.2
  */
 /*
 Plugin Name: Buy This Book
