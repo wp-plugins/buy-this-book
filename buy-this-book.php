@@ -8,7 +8,7 @@ Plugin Name: Buy This Book
 Plugin URI: http://raynfall.com/buy-this-book
 Description: For published authors who want to easily show off their books on different services through a slideout menu. Widget version only. Currently supports linking to Amazon, Kobo, Smashwords, Barnes & Noble, Lulu, and iBooks. Please see the <a href="http://raynfall.com/buy-this-book">plugin page</a> for step-by-step installation instructions.
 Author: Claire Ryan
-Version: 1.1
+Version: 1.2
 Author URI: http://raynfall.com/
 */
 /*  Copyright 2012 CLAIRE RYAN  (email : info@raynfall.com)
