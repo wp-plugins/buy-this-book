@@ -4,11 +4,11 @@ Donate link: http://www.raynfall.com
 Tags: book, author, display, covers, amazon, kobo, ibooks, smashwords, lulu, barnes, noble
 Requires at least: 3.0
 Tested up to: 3.4
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Buy This Book allows authors to display their books on their website with links to six different possible buying options - Amazon, Kobo, Barnes & Noble, Smashwords, Lulu and iBooks - in a convenient slideout menu.
+Buy This Book allows authors to display their books on their website with links to six different possible buying options - Amazon, Kobo, Barnes & Noble, Smashwords, Lulu and iBooks - in a convenient slideout menu. It also includes a single custom option for the author to use their own 32x32 icon and link.
 
 == Description ==
 
@@ -18,7 +18,7 @@ Buy This Book allows authors to display their books on their website with links 
 <li>If authors want to just add their books and a link to Amazon, etc, they’re obliged to know some HTML and it’s something of a pain in the ass.</li>
 <li>Neither option is ideal when books can be available on multiple websites.</li>
 </ul>
-<p>Buy This Book takes cover images and up to six websites, and displays them on the sidebar with a slideout menu.</p>
+<p>Buy This Book takes cover images and up to seven websites, and displays them on the sidebar with a slideout menu.</p>
 <p>It supports:</p>
 <ul>
 <li>Amazon</li>
@@ -27,6 +27,7 @@ Buy This Book allows authors to display their books on their website with links 
 <li>Smashwords</li>
 <li>Lulu</li>
 <li>iBooks</li>
+<li>One custom option</li>
 </ul>
 
 <p>This version of the plugin can also be modified to use other services.</p>
@@ -43,11 +44,15 @@ Buy This Book allows authors to display their books on their website with links 
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Go to the Appearance -> Widgets screen. You should now see a new widget called Buy This Book. Click and drag it over to your chosen sidebar, and it’ll open up automatically.
 4. Fill in the header. This is the widget title, and it’ll display above your books.
-5. Paste the cover image link into the appropriate box. Here’s where the size of the image becomes important – if you want to add just one book to your sidebar, make the image as wide as the sidebar and only use the first column. If you’re only adding two and you want them to sit side by side, you have to make sure the images are narrow enough to fit comfortably. If you find that your images are below each other instead of being side by side, and you don’t want this to happen, then reduce their size.
+5. Paste the cover image link into the appropriate box. Here’s where the size of the image becomes important – if you want to add just one book to your sidebar, make the image as wide as the sidebar and only use the first column. If you’re only adding two and you want them to sit side by side, you have to make sure the images are narrow enough to fit comfortably. If you find that your images are below each other instead of being side by side, and you don’t want this to happen, then reduce their size. Include an alt tag to describe your cover.
 5. Paste a link to your book’s page for each website into the appropriate boxes. Any you don’t use won’t show up.
 6. Save the widget. You’re done! Check your site and click on the cover images to see the menu slide out from the bottom.
 
 == Changelog ==
+
+= 1.3 =
+* Feature - Added alt tag option to main cover images
+* Feature - Added a custom icon + link pair
 
 = 1.2 =
 * Bugfix - Barnes & Noble icon should now appear correctly.
@@ -55,11 +60,6 @@ Buy This Book allows authors to display their books on their website with links 
 = 1.1 =
 * Code improvements to allow easy customization of the plugin
 * Security fix
-
-== Upgrade Notice ==
-
-= 1.2 =
-The Barnes & Noble link may be reset, please be aware that you will have to add the link again.
 
 == Frequently asked questions ==
 

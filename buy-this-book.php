@@ -1,14 +1,14 @@
 <?php
 /**
  * @package Buy_This_Book
- * @version 1.2
+ * @version 1.3
  */
 /*
 Plugin Name: Buy This Book
 Plugin URI: http://raynfall.com/buy-this-book
 Description: For published authors who want to easily show off their books on different services through a slideout menu. Widget version only. Currently supports linking to Amazon, Kobo, Smashwords, Barnes & Noble, Lulu, and iBooks. Please see the <a href="http://raynfall.com/buy-this-book">plugin page</a> for step-by-step installation instructions.
 Author: Claire Ryan
-Version: 1.2
+Version: 1.3
 Author URI: http://raynfall.com/
 */
 /*  Copyright 2012 CLAIRE RYAN  (email : info@raynfall.com)
@@ -68,19 +68,21 @@ class Buy_Book extends WP_Widget {
 		$after_widget = '</div><div style="clear:both;"></div>';
 		$before_header='<h3 class="widget-title">';
 		$after_header='</h3>';
-		$before_image='<div class="toggle"><a class="trigger" href="#"><img class="btbalign" src="';
-		$after_image='"/ ></a><div class="box">';
+		$before_image='<div class="toggle"><a class="trigger" href="#"><img class="btbalign"';
+		$after_image='" / ></a><div class="box">';
 		$closer = '</div></div>';
 		echo $before_widget;
 		if ( ! empty( $header ) )
 			echo $before_header . esc_attr($header) . $after_header;
 		for($k=1; $k <= 3; $k++) {
 			if ( ! empty( ${'image'.$k} ) ) {
-				echo $before_image . esc_url(${'image'.$k}) . $after_image;
+				echo $before_image . ' alt="' . esc_attr($instance['altimage'.$k]) . '" src="' . esc_url(${'image'.$k}) . $after_image;
 				foreach ($btb_service_array as &$btb_name) {	
 					if ( ! empty( ${$btb_name.$k} ) )
 						echo '<a href="' . esc_url((${$btb_name.$k})) . '" title="' . esc_attr($btb_name) . '" target="_blank"><img src="' . esc_url(plugins_url('icons/' . esc_attr($btb_name) . '.png', __FILE__)) . '" alt="' . esc_attr($btb_name) . '" /></a>';
 				}
+				if ( ! empty( $instance['customlink'.$k] ) )
+					echo '<a href="' . esc_url(($instance['customlink'.$k])) . '" title="custom" target="_blank"><img src="' . esc_url(($instance['customimage'.$k])) . '" alt="custom" width="32" height="32" /></a>';
 				echo $closer;
 			}
 		}
@@ -103,10 +105,13 @@ class Buy_Book extends WP_Widget {
 		$instance['header'] = esc_html(strip_tags( $new_instance['header'] ));
 		for($x=1; $x <= 3; $x++) {
 			$instance[('image'.$x)] = esc_url(strip_tags( $new_instance[('image'.$x)] ));
+			$instance[('altimage'.$x)] = esc_html(strip_tags( $new_instance[('altimage'.$x)] ));
 			foreach ($btb_service_array as &$btb_name) {
 				echo $btb_name.$x;
 				$instance[($btb_name.$x)] = esc_url(strip_tags( $new_instance[($btb_name.$x)] ));
 			}
+			$instance[('customimage'.$x)] = esc_url(strip_tags( $new_instance[('customimage'.$x)] ));
+			$instance[('customlink'.$x)] = esc_url(strip_tags( $new_instance[('customlink'.$x)] ));
 		}
 		return $instance;
 	}
@@ -134,6 +139,13 @@ class Buy_Book extends WP_Widget {
 			else {
 				${'image' .$y} = __( '', 'text_domain' );
 			}
+			if ( isset( $instance[ ('altimage'.$y) ] ) ) {
+				${'altimage' .$y} = $instance[ ('altimage'.$y) ];
+			}
+			else {
+				${'altimage' .$y} = __( '', 'text_domain' );
+			}
+
 			foreach ($btb_service_array as &$btb_name) {
 				if ( isset( $instance[ ($btb_name.$y) ] ) ) {
 					${$btb_name.$y} = $instance[ ($btb_name.$y) ];
@@ -141,6 +153,18 @@ class Buy_Book extends WP_Widget {
 				else {
 					${$btb_name.$y} = __( '', 'text_domain' );
 				}
+			}
+			if ( isset( $instance[ ('customimage'.$y) ] ) ) {
+				${'customimage' .$y} = $instance[ ('customimage'.$y) ];
+			}
+			else {
+				${'customimage' .$y} = __( '', 'text_domain' );
+			}
+			if ( isset( $instance[ ('customlink'.$y) ] ) ) {
+				${'customlink' .$y} = $instance[ ('customlink'.$y) ];
+			}
+			else {
+				${'customlink' .$y} = __( '', 'text_domain' );
 			}
 		}
 		?>
@@ -151,10 +175,20 @@ class Buy_Book extends WP_Widget {
 		<div class="btbbookcolumn">
 		<label for="<?php echo $this->get_field_id( 'image'.$y ); ?>"><?php _e( 'Book Image '.$y ); ?></label> 
 		<input class="widefat" id="<?php echo esc_attr($this->get_field_id( 'image'.$y )); ?>" name="<?php echo esc_attr($this->get_field_name( 'image'.$y )); ?>" type="text" value="<?php echo esc_attr( ${'image'.$y} ); ?>" />
+
+		<label for="<?php echo 'altimage'.$y; ?>"><?php echo 'Cover image alt tag'; ?></label> 
+		<input class="widefat" id="<?php echo esc_attr($this->get_field_id( 'altimage'.$y )); ?>" name="<?php echo esc_attr($this->get_field_name( 'altimage'.$y )); ?>" type="text" value="<?php echo esc_attr( ${'altimage'.$y} ); ?>" />
+
 		<?php foreach ($btb_service_array as &$btb_name) { ?>
 		<label for="<?php echo $this->get_field_id( $btb_name.$y ); ?>"><?php _e( str_replace("%20"," ",$btb_name) ); ?></label> 
 		<input class="widefat" id="<?php echo esc_attr($this->get_field_id( $btb_name.$y )); ?>" name="<?php echo esc_attr($this->get_field_name( $btb_name.$y )); ?>" type="text" value="<?php echo esc_attr( ${$btb_name.$y} ); ?>" />
+
 		<?php } ?>
+		<label for="customimage<?php echo $y; ?>"><?php echo 'Custom Icon Image'; ?></label> 
+		<input class="widefat" id="<?php echo esc_attr($this->get_field_id( 'customimage'.$y )); ?>" name="<?php echo esc_attr($this->get_field_name( 'customimage'.$y )); ?>" type="text" value="<?php echo esc_attr( ${'customimage'.$y} ); ?>" />
+		<label for="customlink<?php echo $y; ?>"><?php echo 'Custom Link'; ?></label> 
+		<input class="widefat" id="<?php echo esc_attr($this->get_field_id( 'customlink'.$y )); ?>" name="<?php echo esc_attr($this->get_field_name( 'customlink'.$y )); ?>" type="text" value="<?php echo esc_attr( ${'customlink'.$y} ); ?>" />
+		
 		</div><?php } ?>
 		</p>
 		<?php 
