@@ -54,6 +54,7 @@ class Buy_Book extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
+		
 		global $btb_service_array;
 		extract( $args );
 		$header = apply_filters( 'widget_header', $instance['header'] );
@@ -63,12 +64,19 @@ class Buy_Book extends WP_Widget {
 			{
 				${$btb_name.$i} = apply_filters( ('widget_'. $btb_name  . $i), $instance[($btb_name.$i)] );
 			}
-		}				
+		}
+		$widthclass = "";
+		if(@$instance['image1'] != "" && @$instance['image2'] != "" && @$instance['image3'] == "") {
+			$widthclass = " dualcolumn";
+		}
+		if(@$instance['image1'] != "" && @$instance['image2'] != "" && @$instance['image3'] != "") {
+			$widthclass = " tricolumn";
+		}
 		$before_widget = '<div class="buybook widget">';
 		$after_widget = '</div><div style="clear:both;"></div>';
 		$before_header='<h3 class="widget-title">';
 		$after_header='</h3>';
-		$before_image='<div class="toggle"><a class="trigger" href="#"><img class="btbalign"';
+		$before_image='<div class="toggle'.$widthclass.'"><a class="trigger" href="#"><img class="btbalign"';
 		$after_image='" / ></a><div class="box">';
 		$closer = '</div></div>';
 		echo $before_widget;
@@ -168,6 +176,17 @@ class Buy_Book extends WP_Widget {
 			}
 		}
 		?>
+		<div class="btbinstructions">
+		<h4>Instructions:</h4>
+		<ul>
+			<li>Copy and paste the direct image link into each Book Image field. The link should look something like this: http://www.mysite.com/wp-content/uploads/2015/01/mybookcover.jpg. The link can be any valid image file (.jpg, .png, .gif, etc.)</li>
+			<li>Copy the links to each service into the appropriate fields.</li>
+			<li>The Custom Image should be a 32x32 pixel icon. Copy and paste it exactly like you did for the Book Cover link.</li>
+			<li>Using one, two or all three book slots per widget will change how the books appear on the site. Books will always appear in a horizontal row.</li>
+			<li>You don't need to use all three slots! Use only the first one for a book you want to highlight. It'll take up the whole sidebar space.</li>
+			<li>You can use as many copies of the widget as you like.</li>
+		</ul>
+		</div>
 		<p>
 		<label for="<?php echo esc_attr($this->get_field_id( 'header' )); ?>"><?php _e( ' Header' ); ?></label> 
 		<input class="widefat" id="<?php echo esc_attr($this->get_field_id( 'header' )); ?>" name="<?php echo esc_attr($this->get_field_name( 'header' )); ?>" type="text" value="<?php echo esc_attr( $header ); ?>" />

@@ -3,8 +3,8 @@ Contributors: raynfall
 Donate link: http://www.raynfall.com
 Tags: book, author, display, covers, amazon, kobo, ibooks, smashwords, lulu, barnes, noble
 Requires at least: 3.0
-Tested up to: 3.4
-Stable tag: 1.3
+Tested up to: 4.1
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,8 +34,8 @@ Buy This Book allows authors to display their books on their website with links 
 
 <p>Suggestions for new functionality welcome! Please contact me here:</p>
 
-<p><a href="https://www.facebook.com/RaynfallAgency">Facebook</a><br />
-<a href="http://www.twitter.com/@rayntweets">Twitter</a><br />
+<p><a href="https://www.facebook.com/claireryanauthor">Facebook</a><br />
+<a href="http://www.twitter.com/@aetherlev">Twitter</a><br />
 <a href="http://www.raynfall.com">Website</a></p>
 
 == Installation ==
@@ -49,6 +49,11 @@ Buy This Book allows authors to display their books on their website with links 
 6. Save the widget. You’re done! Check your site and click on the cover images to see the menu slide out from the bottom.
 
 == Changelog ==
+
+= 1.4 =
+* Feature - Added conditional CSS to allow for the number of books per row
+* Feature - Added instruction list to each widget instance
+* Made some small improvements to the CSS on the widget admin display
 
 = 1.3 =
 * Feature - Added alt tag option to main cover images
